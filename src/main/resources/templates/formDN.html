@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Đăng Nhập</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <h1>Vietnam News</h1>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Tìm kiếm...">
+        </div>
+    </div>
+</header>
+
+<nav>
+    <ul class="menu">
+        <li><a href="/api/public/">Trang Chủ</a></li>
+        <li id="menuDangKy" style="display: none"><a href="/api/public/register">Đăng Ký</a></li>
+        <li id="menuDangNhap" style="display: none"><a href="/api/public/login">Đăng Nhập</a></li>
+        <li id="menuProfile" style="display: none"><a href="/api/user/profile">Tài Khoản</a></li>
+        <li id="menuDangXuat" onclick="logout()" style="display: none">Đăng xuất</li>
+    </ul>
+</nav>
+
+<div class="flex-container">
+    <div class="form-section">
+        <h2>Đăng nhập</h2>
+        <form id="loginForm">
+            <input type="text" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Mật khẩu" required>
+            <button type="submit">Đăng nhập</button>
+        </form>
+    </div>
+    <div class="image-section">
+        <img src="https://kenh14cdn.com/2018/12/18/img4544-15451413420501492129729-crop-15451413523511303995002.jpg" alt="Hình minh họa">
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Vietnam News. All rights reserved.</p>
+</footer>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var username = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        var loginData = {
+            email: username,
+            password: password
+        };
+
+        fetch('/api/public/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                localStorage.setItem('jwt', data.token);
+                localStorage.setItem('role', data.role);
+                document.getElementById('menuDangNhap').style.display = 'block';
+                document.getElementById('menuProfile').style.display = 'none';
+                document.getElementById('menuDangXuat').style.display = 'none';
+
+                window.location.href = '/api/public/';  // Chuyển hướng sau khi đăng nhập thành công
+            })
+            .catch(error => {
+                alert('Login failed: ' + error.message);
+            });
+    });
+</script>
+
+<!-- <script>
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      alert("Vui lòng nhập đầy đủ email và mật khẩu.");
+      return;
+    }
+
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Email không hợp lệ.");
+      return;
+    }
+
+    alert("Đăng nhập thành công!");
+  });
+</script> -->
+<script src="/js/logout.js"></script>
+<script src="/js/menu.js"></script>
+
+</body>
+</html>

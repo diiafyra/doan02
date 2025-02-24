@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <h1>Vietnam News</h1>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Tìm kiếm...">
+        </div>
+    </div>
+</header>
+
+<nav>
+    <ul class="menu">
+        <li><a href="/api/public/">Trang Chủ</a></li>
+        <li id="menuDangKy" style="display: none"><a href="/api/public/register">Đăng Ký</a></li>
+        <li id="menuDangNhap" style="display: none"><a href="/api/public/login">Đăng Nhập</a></li>
+        <li id="menuProfile" style="display: none"><a href="/api/user/profile">Tài Khoản</a></li>
+        <li id="menuDangXuat" onclick="logout()" style="display: none">Đăng xuất</li>
+    </ul>
+</nav>
+
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <h1>Vietnam News</h1>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2>Chi Tiết Bài Viết</h2>
+
+        <!-- Bài viết -->
+        <div class="bai-viet">
+            <h3 >Tiêu đề bài viết</h3> <!-- Tiêu đề bài viết -->
+
+            <div class="content">
+                <p >Nội dung bài viết</p> <!-- Nội dung bài viết -->
+            </div>
+
+            <div class="info">
+                <p><strong>Tác giả:</strong> Tên tác giả</span></p> <!-- Tên tác giả -->
+                <p><strong>Ngày đăng:</strong> Ngày đăng</span></p> <!-- Ngày đăng -->
+                <p><strong>Danh mục:</strong> Danh mục bài viết</span></p> <!-- Danh mục bài viết -->
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Vietnam News</p>
+</footer>
+
+<script src="/js/logout.js"></script>
+<script src="/js/menu.js"></script>
+
+</body>
+</html>

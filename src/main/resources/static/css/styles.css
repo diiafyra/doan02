@@ -1,0 +1,161 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFF9F0;
+    color: #333;
+}
+
+header {
+    background-color: #A8D5BA;
+    color: #fff;
+    padding: 10px 20px;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.header-container .logo h1 {
+    font-size: 24px;
+    margin: 0;
+}
+.header-container .header-right input[type="text"] {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+}
+
+/* Menu */
+nav {
+    background-color: #98C9A6;
+}
+.menu {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.menu li {
+    height: 50px;
+    padding: 15px;
+    display: block;
+    color: #fff;
+}
+.menu li:hover {
+    background-color: #87B98F;
+}
+.menu li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+}
+.menu li a:hover {
+    background-color: #87B98F;
+}
+
+/* Container chung */
+.container {
+    background: #FFF9F0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 90%;
+    max-width: 800px;
+}
+
+/* Flex layout cho form */
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+/* Form */
+.form-section {
+    width: 48%;
+    padding: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.form-section input, .form-section button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+/* Ảnh minh họa */
+.image-section {
+    width: 48%;
+    text-align: center;
+}
+.image-section img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    background-color: #A8D5BA;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: relative;
+}
+/* CSS */
+.show {
+    display: block !important;
+}
+
+.hide {
+    display: none !important;
+}
+
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .header-container .header-right input {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .menu {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .flex-container {
+        flex-direction: column;
+        width: 90%;
+    }
+    .form-section, .image-section {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header-container .logo h1 {
+        font-size: 20px;
+    }
+    .menu li a {
+        padding: 8px 12px;
+    }
+}

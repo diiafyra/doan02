@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Đăng Ký</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <h1>Vietnam News</h1>
+        </div>
+        <div class="header-right">
+            <input type="text" placeholder="Tìm kiếm...">
+        </div>
+    </div>
+</header>
+
+<nav>
+    <ul class="menu">
+        <li><a href="/api/public/">Trang Chủ</a></li>
+        <li id="menuDangKy" style="display: none"><a href="/api/public/register">Đăng Ký</a></li>
+        <li id="menuDangNhap" style="display: none"><a href="/api/public/login">Đăng Nhập</a></li>
+        <li id="menuProfile" style="display: none"><a href="/api/user/profile">Tài Khoản</a></li>
+        <li id="menuDangXuat" onclick="logout()" style="display: none">Đăng xuất</li>
+    </ul>
+</nav>
+
+<div class="flex-container">
+    <div class="form-section">
+        <h2>Đăng ký tài khoản</h2>
+        <form action="#" th:action="@{/api/public/auth/register}" method="post" th:object="${user}">
+            <input type="email" th:field="*{email}" placeholder="Email" required>
+            <input type="password" th:field="*{matKhau}" placeholder="Mật khẩu" required>
+            <button type="submit">Xác nhận</button>
+        </form>
+        <div th:if="${message}">
+            <p th:text="${message}"></p> <!-- Hiển thị thông báo từ controller -->
+        </div>
+    </div>
+    <div class="image-section">
+        <img src="https://kenh14cdn.com/2018/12/18/img4544-15451413420501492129729-crop15451413523511303995002.jpg" alt="Hình minh họa">
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2025 Vietnam News.</p>
+</footer>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var message = /*[[${message}]]*/ '';  // Đảm bảo rằng giá trị không gây lỗi trong JS
+    if (message) {
+        alert(message);  // Hiển thị thông báo dưới dạng alert
+    }
+    /*]]>*/
+</script>
+
+<script src="/js/logout.js"></script>
+<script src="/js/menu.js"></script>
+
+</body>
+</html>
