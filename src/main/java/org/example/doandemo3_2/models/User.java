@@ -18,7 +18,7 @@ public class User {
     @Id
     private UUID idNguoiDung;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 50, columnDefinition = "NVARCHAR(MAX)")
     private String tenNguoiDung;
 
     @Column(nullable = false)

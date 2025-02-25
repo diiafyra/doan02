@@ -20,7 +20,7 @@ public class BinhLuan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBinhLuan;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 1000, columnDefinition = "NVARCHAR(MAX)")
     private String noiDung;
 
     @ManyToOne

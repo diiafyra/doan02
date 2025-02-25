@@ -28,34 +28,17 @@
     </ul>
 </nav>
 
-<header>
-    <div class="header-container">
-        <div class="logo">
-            <h1>Vietnam News</h1>
-        </div>
+<div class="container">
+    <h3 th:text="${baiViet.tieuDe}">Tiêu đề bài viết</h3> <!-- Tiêu đề bài viết -->
+    <div class="content">
+        <p th:text="${baiViet.noiDung}">Nội dung bài viết</p> <!-- Nội dung bài viết -->
     </div>
-</header>
-
-<main>
-    <div class="container">
-        <h2>Chi Tiết Bài Viết</h2>
-
-        <!-- Bài viết -->
-        <div class="bai-viet">
-            <h3 >Tiêu đề bài viết</h3> <!-- Tiêu đề bài viết -->
-
-            <div class="content">
-                <p >Nội dung bài viết</p> <!-- Nội dung bài viết -->
-            </div>
-
-            <div class="info">
-                <p><strong>Tác giả:</strong> Tên tác giả</span></p> <!-- Tên tác giả -->
-                <p><strong>Ngày đăng:</strong> Ngày đăng</span></p> <!-- Ngày đăng -->
-                <p><strong>Danh mục:</strong> Danh mục bài viết</span></p> <!-- Danh mục bài viết -->
-            </div>
-        </div>
+    <div class="info">
+        <p><strong>Tác giả:</strong> <span th:text="${baiViet.tacGia.tenTacGia}">Tên tác giả</span></p> <!-- Tên tác giả -->
+        <p><strong>Ngày đăng:</strong> <span th:text="${baiViet.ngayDang}">Ngày đăng</span></p> <!-- Ngày đăng -->
+        <p><strong>Danh mục:</strong> <span th:text="${baiViet.danhMuc.tenDanhMuc}">Danh mục bài viết</span></p> <!-- Danh mục bài viết -->
     </div>
-</main>
+</div>
 
 <footer>
     <p>&copy; 2025 Vietnam News</p>

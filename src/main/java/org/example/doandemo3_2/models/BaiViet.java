@@ -20,15 +20,15 @@ public class BaiViet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idBaiViet;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
     private String tieuDe;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "NVARCHAR(MAX)")
     private String noiDung;
 
     @ManyToOne
     @JoinColumn(name = "tac_gia")
-    private User tacGia;
+    private TacGia tacGia;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime ngayDang = LocalDateTime.now();
@@ -37,3 +37,4 @@ public class BaiViet {
     @JoinColumn(name = "danh_muc")
     private DanhMuc danhMuc;
 }
+

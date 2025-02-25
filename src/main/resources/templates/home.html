@@ -32,24 +32,34 @@
     <h2>📢 Thông báo cuộc họp sau Tết</h2>
     <p>
         <br><br>
-
         Sau kỳ nghỉ Tết vui vẻ ăn chơi không lối về, nhóm nhận ra một sự thật đau lòng: <b>Deadline vẫn tồn tại, còn bài thì chưa có!</b> 🎇💀<br><br>
-
         Ban đầu, chúng tôi dự định họp vào thứ 6 (7/2/2025) để "chốt sổ", nhưng sau 5 phút nhìn nhau và 30 phút bàn bạc nghiêm túc, nhóm đã đi đến một quyết định <b>đầy trách nhiệm</b>: <b>Hoãn cuộc họp sang tuần sau!</b> 📅🔥<br><br>
-
         Thầy Nam - người thầy hiền từ sau khi thấy tình trạng của nhóm đã thở một cái thật dài và bất lực đồng ý 😭😭😭 <br><br>
-
         Vậy là chúng tôi chính thức bước vào chế độ <b>"cày cày cày và cày"</b>, hy vọng hôm sau sẽ không có ai "bay màu". 🚀💻☕<br><br>
-
         <b>Kết luận:</b> Tết vui nhưng hậu quả cũng "vui" không kém. Mong rằng sang năm mới, nhóm ta sẽ trưởng thành hơn... hoặc ít nhất là <b>bớt delay hơn một chút!</b> 😅🎉
     </p>
+
+</div>
+
+<div class="container">
+    <h3>10 Bài viết mới nhất</h3>
+    <div class="articles">
+        <ul>
+            <!-- Lặp qua danh sách bài viết -->
+            <li th:each="baiViet : ${baiViets}">
+                <h4 th:text="${baiViet.tieuDe}"></h4>
+                <p th:text="${baiViet.noiDung}"></p>
+                <a th:href="@{/api/public/BaiViet/{id}(id=${baiViet.idBaiViet})}">Xem chi tiết</a>
+            </li>
+        </ul>
+    </div>
 
 </div>
 
 <footer>
     <p>&copy; 2025 Vietnam News.</p>
 </footer>
-<!--<script type="module" src="home.js"></script>-->
+
 <script>
     var jwt = localStorage.getItem('role');
     if(jwt) {
