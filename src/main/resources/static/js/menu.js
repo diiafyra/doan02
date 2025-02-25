@@ -1,16 +1,28 @@
-// menu.js
-window.onload = function() {
-    var role = localStorage.getItem('role'); // Lấy role từ localStorage
+document.addEventListener("DOMContentLoaded", function() {
+    var role = localStorage.getItem('role'); // Nếu chưa đăng nhập, coi như khách (GUEST)
+    if(!role || role == "null") role = "GUEST";
+    var menu = document.getElementById('menu'); // Lấy thẻ <ul> menu
+    var menuItems = [
+        { text: "Trang Chủ", link: "/api/public/", showFor: ["USER", "GUEST"] },
+        { text: "Đăng Ký", link: "/api/public/register", showFor: ["GUEST"] },
+        { text: "Đăng Nhập", link: "/api/public/login", showFor: ["GUEST"] },
+        { text: "Tài Khoản", link: "/api/user/profile", showFor: ["USER"] },
+        { text: "Đăng Xuất", link: "javascript:logout()", showFor: ["USER"] }
+    ];
 
-    if (role === 'USER') {
-        document.getElementById('menuDangNhap').style.display = 'none';
-        document.getElementById('menuDangKy').style.display = 'none';
-        document.getElementById('menuProfile').style.display = 'block';
-        document.getElementById('menuDangXuat').style.display = 'block';
-    } else  {
-        document.getElementById('menuDangNhap').style.display = 'block';
-        document.getElementById('menuDangKy').style.display = 'block';
-        document.getElementById('menuProfile').style.display = 'none';
-        document.getElementById('menuDangXuat').style.display = 'none';
-    }
-};
+    menuItems.forEach(item => {
+        if (item.showFor.includes(role)) {
+            var li = document.createElement("li");
+            var a = document.createElement("a");
+            a.href = item.link;
+            a.textContent = item.text;
+            li.appendChild(a);
+            if (item.text === "Đăng Xuất") {
+                li.addEventListener("click", logout);
+                a.removeAttribute("href"); // Xóa href để tránh chuyển trang
+            }
+
+            menu.appendChild(li);
+        }
+    });
+});

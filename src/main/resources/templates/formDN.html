@@ -20,13 +20,7 @@
 </header>
 
 <nav>
-    <ul class="menu">
-        <li><a href="/api/public/">Trang Chủ</a></li>
-        <li id="menuDangKy" style="display: none"><a href="/api/public/register">Đăng Ký</a></li>
-        <li id="menuDangNhap" style="display: none"><a href="/api/public/login">Đăng Nhập</a></li>
-        <li id="menuProfile" style="display: none"><a href="/api/user/profile">Tài Khoản</a></li>
-        <li id="menuDangXuat" onclick="logout()" style="display: none">Đăng xuất</li>
-    </ul>
+    <ul id="menu" class="menu"></ul>
 </nav>
 
 <div class="flex-container">
@@ -69,13 +63,12 @@
         })
             .then(response => response.json())
             .then(data => {
-                localStorage.setItem('jwt', data.token);
-                localStorage.setItem('role', data.role);
-                document.getElementById('menuDangNhap').style.display = 'block';
-                document.getElementById('menuProfile').style.display = 'none';
-                document.getElementById('menuDangXuat').style.display = 'none';
-
-                window.location.href = '/api/public/';  // Chuyển hướng sau khi đăng nhập thành công
+                alert(data.message)
+                if(!data.errorCode) {
+                    localStorage.setItem('jwt', data.token);
+                    localStorage.setItem('role', data.role);
+                    window.location.href = '/api/public/';  // Chuyển hướng sau khi đăng nhập thành công
+                }
             })
             .catch(error => {
                 alert('Login failed: ' + error.message);

@@ -1,17 +1,12 @@
 package org.example.doandemo3_2.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.doandemo3_2.dto.LoginRequest;
+import org.example.doandemo3_2.dto.UserRequest;
 import org.example.doandemo3_2.dto.LoginResponse;
+import org.example.doandemo3_2.dto.RegisterResponse;
 import org.example.doandemo3_2.models.User;
 import org.example.doandemo3_2.repository.UserRepository;
 import org.example.doandemo3_2.security.JwtTokenProvider;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,11 +30,11 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
-    public String registerUser(User user) {
+    public RegisterResponse registerUser(User user) {
         System.out.println("Đang xử lý đăng ký cho: " + user.getEmail());  // Kiểm tra xem thông tin có được nhận hay không
 
         if (userRepository.existsByEmail(user.getEmail())) {
-            return "Email đã tồn tại!";
+            return new RegisterResponse("Failed", "Email đã tồn tại!");
         }
 
         user.setMatKhau(passwordEncoder.encode(user.getMatKhau()));
@@ -52,7 +47,7 @@ public class UserService {
 
         emailService.sendVerificationEmail(user.getEmail(), user.getVerificationToken());
 
-        return "Đăng ký thành công! Kiểm tra email để xác thực tài khoản.";
+        return new RegisterResponse(null,"Đăng ký thành công! Kiểm tra email để xác thực tài khoản.");
     }
 
 
@@ -83,24 +78,24 @@ public class UserService {
         return "Không có ảnh đại diện để tải lên!";
     }
 
-    public LoginResponse login(LoginRequest request) {
+    public LoginResponse login(UserRequest request) {
         Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
 
         if (userOptional.isEmpty()) {
-            throw new RuntimeException("Tài khoản không tồn tại!");
+            return new  LoginResponse("Failed","Tài khoản không tồn tại!", null, null);
         }
 
         User user = userOptional.get();
 
         if (user.getTrangThaiTaiKhoan() == TrangThaiTaiKhoan.CHUA_XAC_THUC) {
-            throw new RuntimeException("Tài khoản chưa xác thực! Vui lòng kiểm tra email để xác nhận.");
+            return new LoginResponse("Failed","Tài khoản chưa xác thực! Vui lòng kiểm tra email để xác nhận.", null, null);
         }
         if (user.getTrangThaiTaiKhoan() == TrangThaiTaiKhoan.KHOA_TAI_KHOAN) {
-            throw new RuntimeException("Tài khoản bị khóa. Vui lòng liên hệ quản trị viên.");
+            return new LoginResponse("Failed","Tài khoản bị khóa. Vui lòng liên hệ quản trị viên.", null, null);
         }
 
         if (!passwordEncoder.matches(request.getPassword(), user.getMatKhau())) {
-            throw new RuntimeException("Sai mật khẩu! Vui lòng thử lại.");
+            return new LoginResponse("Failed","Sai mật khẩu! Vui lòng thử lại.", null, null);
         }
 
         System.out.println("Raw Password: " + request.getPassword());
@@ -110,14 +105,14 @@ public class UserService {
 
         try {
             System.out.println(request.getEmail());
-            String jwt = jwtTokenProvider.generateToken(request.getEmail(), "USER");
+            String jwt = jwtTokenProvider.generateToken(user.getIdNguoiDung(), "USER");
 
             System.out.println(jwt);
-            return new LoginResponse("Đăng nhập thành công!", jwt, jwtTokenProvider.getRoleFromToken(jwt));
+            return new LoginResponse(null,"Đăng nhập thành công!", jwt, jwtTokenProvider.getRoleFromToken(jwt));
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            throw new RuntimeException("Xác thực thất bại! Vui lòng thử lại.");
+            return new LoginResponse("Failed","Xác thực thất bại! Vui lòng thử lại.",null,null);
         }
     }
 }

@@ -3,6 +3,27 @@
     margin: 0;
     padding: 0;
 }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Lato:wght@300;400;700&family=Poppins:wght@300;400;600&family=Montserrat:wght@400;500;600&family=Open+Sans:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Roboto', 'Lato', 'Poppins', 'Montserrat', 'Open Sans', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+a {
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -68,7 +89,12 @@ nav {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     margin: 20px auto;
     width: 90%;
-    max-width: 800px;
+    max-width: 900px;
+}
+.container-comment {
+    margin: 20px auto;
+    width: 90%;
+    max-width: 900px;
 }
 
 /* Flex layout cho form */
@@ -104,6 +130,112 @@ nav {
     height: auto;
     border-radius: 5px;
 }
+
+.comment-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+}
+
+.comment-section h4 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#commentInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+#submitComment {
+    padding: 10px 20px;
+    background-color: #A8D5BA;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#submitComment:hover {
+    background-color: #87B98F;
+}
+
+/* Comments list */
+#commentsList {
+    margin-top: 20px;
+}
+
+.comment {
+    padding: 10px;
+    background-color: #f8f8f8;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #fff7f7;
+}
+
+.comment strong {
+    font-size: 16px;
+}
+
+#commentMessage {
+    color: red;
+    font-size: 14px;
+}
+
+/* CSS cho article-container */
+.article-container {
+    background-color: #ffffff; /* Màu nền nhẹ cho container */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+/* Tiêu đề bài viết */
+.article-container #articleTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Nội dung bài viết */
+.article-container .content #articleContent {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Thông tin bài viết (tác giả, ngày đăng, danh mục) */
+.article-container .info {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+.article-container .info p {
+    margin-bottom: 10px;
+}
+
+.article-container .info strong {
+    color: #333;
+}
+
+/* ID bài viết */
+.article-container #baiVietId {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 15px;
+}
+
 
 /* Footer */
 footer {

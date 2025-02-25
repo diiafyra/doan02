@@ -42,16 +42,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> {}) // Cho phép CORS
+                .cors(cors -> {})
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/api/public/**").permitAll()  // Đảm bảo mở tất cả API công khai
                         .requestMatchers(HttpMethod.POST, "/api/public/**").permitAll() // Cho phép POST request
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/api/user/**", "/api/comments/**").hasRole("USER")
-                        .anyRequest().permitAll()  // Đổi `authenticated()` thành `permitAll()` để kiểm tra
+                        .requestMatchers("/api/user/**").hasRole("USER")
+//                        .requestMatchers("/api/user/**").hasAuthority("ROLE_USER")
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        System.out.println("Security filter chain loaded. Checking role access...");
 
         return http.build();
     }

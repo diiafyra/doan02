@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/css/styles.css">
-
 </head>
 <body>
 <header>
@@ -19,24 +18,37 @@
 </header>
 
 <nav>
-    <ul class="menu">
-        <li><a href="/api/public/">Trang Chủ</a></li>
-        <li id="menuDangKy" style="display: none"><a href="/api/public/register">Đăng Ký</a></li>
-        <li id="menuDangNhap" style="display: none"><a href="/api/public/login">Đăng Nhập</a></li>
-        <li id="menuProfile" style="display: none"><a href="/api/user/profile">Tài Khoản</a></li>
-        <li id="menuDangXuat" onclick="logout()" style="display: none">Đăng xuất</li>
-    </ul>
+    <ul id="menu" class="menu"></ul>
 </nav>
 
-<div class="container">
-    <h3 th:text="${baiViet.tieuDe}">Tiêu đề bài viết</h3> <!-- Tiêu đề bài viết -->
+<div class="container article-container">
+    <p style="font-size: x-small" th:text="${baiViet.ngayDang}">Tên tác giả</p>
+    <h3 id="articleTitle" th:text="${baiViet.tieuDe}">Tiêu đề bài viết</h3> <!-- Tiêm Tiêu Đề từ BaiViet -->
+    <p id="baiVietId" th:text="'ID: ' + ${baiViet.idBaiViet}"></p> <!-- Tiêm ID bài viết -->
+
     <div class="content">
-        <p th:text="${baiViet.noiDung}">Nội dung bài viết</p> <!-- Nội dung bài viết -->
+        <p id="articleContent" th:text="${baiViet.noiDung}">Nội dung bài viết</p> <!-- Tiêm Nội Dung từ BaiViet -->
     </div>
+
     <div class="info">
-        <p><strong>Tác giả:</strong> <span th:text="${baiViet.tacGia.tenTacGia}">Tên tác giả</span></p> <!-- Tên tác giả -->
-        <p><strong>Ngày đăng:</strong> <span th:text="${baiViet.ngayDang}">Ngày đăng</span></p> <!-- Ngày đăng -->
-        <p><strong>Danh mục:</strong> <span th:text="${baiViet.danhMuc.tenDanhMuc}">Danh mục bài viết</span></p> <!-- Danh mục bài viết -->
+        <p><strong>Danh mục:</strong> <span id="categoryName" th:text="${baiViet.danhMuc.tenDanhMuc}">Danh mục bài viết</span></p>
+        <p><strong th:text="${baiViet.tacGia.tenTacGia}">Tên tác giả</strong></p>
+    </div>
+</div>
+
+
+<div class="comment-section">
+    <div class="container-comment">
+        <h4>Chia sẻ ý kiến của bạn</h4>
+        <div id="commentMessage" style="color:red; display:none;"></div>
+        <textarea id="commentInput" placeholder="Nhập ở đây..." rows="4" cols="50"></textarea>
+        <button id="submitComment" style="display: none;">Gửi</button>
+
+        <div>
+            <div id="commentsList">
+                <h4>Ý kiến bạn đọc</h4>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -47,5 +59,91 @@
 <script src="/js/logout.js"></script>
 <script src="/js/menu.js"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const baiVietIdText = document.getElementById('baiVietId').textContent;
+        const baiVietId = baiVietIdText.replace('ID: ', '').trim();
+        const commentInput = document.getElementById('commentInput');
+        const submitButton = document.getElementById('submitComment');
+        const commentMessage = document.getElementById('commentMessage');
+
+        commentInput.addEventListener('focus', () => {
+            const jwt = localStorage.getItem('jwt');
+            if (!jwt) {
+                commentMessage.style.display = 'block';
+                commentMessage.textContent = 'Vui lòng đăng nhập để bình luận.';
+                submitButton.style.display = 'none';
+            } else {
+                commentMessage.style.display = 'none';
+                submitButton.style.display = 'block';
+            }
+        });
+
+        submitButton.addEventListener('click', async () => {
+            const comment = commentInput.value.trim();
+            const jwt = localStorage.getItem('jwt');
+
+            if (!jwt) {
+                commentMessage.style.display = 'block';
+                commentMessage.textContent = 'Vui lòng đăng nhập để bình luận.';
+                return;
+            }
+
+            if (!comment) {
+                alert('Bình luận không được để trống!');
+                return;
+            }
+
+            const commentData = {
+                content: comment,
+                baiVietId:baiVietId
+            };
+
+            try {
+                const response = await fetch('/api/user/comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + jwt
+                    },
+                    body: JSON.stringify(commentData)
+                });
+
+                const data = await response.json();
+                alert(data.message);
+                if (!data.success) {
+                    commentInput.value = '';
+                    loadComments();
+                }
+            } catch (error) {
+                alert('Có lỗi xảy ra khi gửi bình luận.' + error);
+            }
+        });
+
+        async function loadComments() {
+            try {
+                const response = await fetch(`/api/public/baiViet/${baiVietId}/comments`);
+                const comments = await response.json();
+                displayComments(comments);
+            } catch (error) {
+                console.log("Lỗi khi tải bình luận:", error);
+            }
+        }
+
+        function displayComments(comments) {
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = '';
+
+            comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.classList.add('comment');
+                commentDiv.innerHTML = `<strong>${comment.nguoiDung.tenNguoiDung}</strong>: ${comment.noiDung}`;
+                commentsList.appendChild(commentDiv);
+            });
+        }
+
+        loadComments();
+    });
+</script>
 </body>
 </html>

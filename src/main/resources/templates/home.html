@@ -19,14 +19,9 @@
 </header>
 
 <nav>
-    <ul class="menu">
-        <li><a href="/api/public/">Trang Chủ</a></li>
-        <li id="menuDangKy" style="display: none"><a href="/api/public/register">Đăng Ký</a></li>
-        <li id="menuDangNhap" style="display: none"><a href="/api/public/login">Đăng Nhập</a></li>
-        <li id="menuProfile" style="display: none"><a href="/api/user/profile">Tài Khoản</a></li>
-        <li id="menuDangXuat" onclick="logout()" style="display: none">Đăng xuất</li>
-    </ul>
+    <ul id="menu" class="menu"></ul>
 </nav>
+
 
 <div class="container">
     <h2>📢 Thông báo cuộc họp sau Tết</h2>
@@ -41,18 +36,22 @@
 
 </div>
 
-<div class="container">
-    <h3>10 Bài viết mới nhất</h3>
-    <div class="articles">
+<div >
+    <div class="container">
+        <h3>10 Bài viết mới nhất</h3>
+    </div>
+
+    <div class="container">
         <ul>
-            <!-- Lặp qua danh sách bài viết -->
-            <li th:each="baiViet : ${baiViets}">
+            <li th:each="baiViet : ${baiViets}" th:onclick="'window.location.href=\'/api/public/baiviet/' + ${baiViet.idBaiViet} + '\''">
                 <h4 th:text="${baiViet.tieuDe}"></h4>
-                <p th:text="${baiViet.noiDung}"></p>
-                <a th:href="@{/api/public/BaiViet/{id}(id=${baiViet.idBaiViet})}">Xem chi tiết</a>
+                <p th:text="'Highlight: '+${#strings.substring(baiViet.noiDung, 0, 50)}"></p>
+                <p th:text="'Ngày đăng: '+${baiViet.ngayDang}"></p>
             </li>
         </ul>
     </div>
+
+
 
 </div>
 

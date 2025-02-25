@@ -2,14 +2,14 @@ package org.example.doandemo3_2.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponse {
-    private String errorCode;
-    private String message;
-    private String token;
-    private String role;
+public class CommentRequest {
+    private String content;
+    private Integer baiVietId;
 }

@@ -16,7 +16,6 @@ public class BaiVietService {
     @Autowired
     private BaiVietRepository baiVietRepository;
 
-    // Lấy bài viết theo id
     public Optional<BaiViet> getBaiVietById(Integer idBaiViet) {
         return baiVietRepository.findBaiVietByIdBaiViet(idBaiViet);
     }
