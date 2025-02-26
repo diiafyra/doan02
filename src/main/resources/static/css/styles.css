@@ -120,10 +120,17 @@ nav {
     padding: 10px;
 }
 
-/* Ảnh minh họa */
+ /*Ảnh minh họa */
 .image-section {
-    width: 48%;
     text-align: center;
+    width: 48%;
+
+}
+
+img {
+    width: 80%;
+    display: block;
+    margin: auto;
 }
 .image-section img {
     max-width: 100%;

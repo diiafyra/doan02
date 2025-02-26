@@ -40,7 +40,6 @@
 <div class="comment-section">
     <div class="container-comment">
         <h4>Chia sẻ ý kiến của bạn</h4>
-        <div id="commentMessage" style="color:red; display:none;"></div>
         <textarea id="commentInput" placeholder="Nhập ở đây..." rows="4" cols="50"></textarea>
         <button id="submitComment" style="display: none;">Gửi</button>
 
@@ -65,16 +64,14 @@
         const baiVietId = baiVietIdText.replace('ID: ', '').trim();
         const commentInput = document.getElementById('commentInput');
         const submitButton = document.getElementById('submitComment');
-        const commentMessage = document.getElementById('commentMessage');
 
         commentInput.addEventListener('focus', () => {
             const jwt = localStorage.getItem('jwt');
             if (!jwt) {
-                commentMessage.style.display = 'block';
-                commentMessage.textContent = 'Vui lòng đăng nhập để bình luận.';
+                alert('Vui lòng đăng nhập để bình luận.');
+                commentInput.blur();
                 submitButton.style.display = 'none';
             } else {
-                commentMessage.style.display = 'none';
                 submitButton.style.display = 'block';
             }
         });
@@ -84,8 +81,7 @@
             const jwt = localStorage.getItem('jwt');
 
             if (!jwt) {
-                commentMessage.style.display = 'block';
-                commentMessage.textContent = 'Vui lòng đăng nhập để bình luận.';
+                alert('Vui lòng đăng nhập để bình luận.');
                 return;
             }
 
