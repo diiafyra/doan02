@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
-    var role = localStorage.getItem('role'); // Nếu chưa đăng nhập, coi như khách (GUEST)
-    if(!role || role == "null") role = "GUEST";
+    var role = localStorage.getItem('token'); // Nếu chưa đăng nhập, coi như khách (GUEST)
+    if(!role || token == "null") role = "GUEST";
+    else role = "USER"
     var menu = document.getElementById('menu'); // Lấy thẻ <ul> menu
     var menuItems = [
         { text: "Trang Chủ", link: "/api/public/", showFor: ["USER", "GUEST"] },
