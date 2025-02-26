@@ -41,15 +41,19 @@
         <h3>10 Bài viết mới nhất</h3>
     </div>
 
-    <div class="container">
+    <div>
         <ul>
             <li th:each="baiViet : ${baiViets}" th:onclick="'window.location.href=\'/api/public/baiviet/' + ${baiViet.idBaiViet} + '\''">
-                <h4 th:text="${baiViet.tieuDe}"></h4>
-                <p th:text="'Highlight: '+${#strings.substring(baiViet.noiDung, 0, 50)}"></p>
-                <p th:text="'Ngày đăng: '+${baiViet.ngayDang}"></p>
+                <div class="container"> <!-- Mỗi bài viết trong một container riêng -->
+                    <h4 th:text="${baiViet.tieuDe}"></h4>
+                    <!-- Dòng này bị chú thích đi, bạn có thể sử dụng nếu muốn hiển thị một đoạn nổi bật -->
+                    <!-- <p th:text="'Highlight: '+${#strings.substring(baiViet.noiDung, 0, 50)}"></p> -->
+                    <p th:text="'Ngày đăng: ' + ${baiViet.ngayDang}"></p>
+                </div>
             </li>
         </ul>
     </div>
+
 
 
 

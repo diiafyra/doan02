@@ -27,7 +27,7 @@
     <p id="baiVietId" th:text="'ID: ' + ${baiViet.idBaiViet}"></p> <!-- Tiêm ID bài viết -->
 
     <div class="content">
-        <p id="articleContent" th:text="${baiViet.noiDung}">Nội dung bài viết</p> <!-- Tiêm Nội Dung từ BaiViet -->
+        <p id="articleContent" th:utext="${baiViet.noiDung}"></p> <!-- Tiêm nội dung bài viết với HTML -->
     </div>
 
     <div class="info">
@@ -137,6 +137,7 @@
             comments.forEach(comment => {
                 const commentDiv = document.createElement('div');
                 commentDiv.classList.add('comment');
+
                 commentDiv.innerHTML = `<strong>${comment.nguoiDung.tenNguoiDung}</strong>: ${comment.noiDung}`;
                 commentsList.appendChild(commentDiv);
             });
