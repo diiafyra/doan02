@@ -1,6 +1,7 @@
 package org.example.doandemo3_2.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.doandemo3_2.dto.UpdateProfileRequest;
 import org.example.doandemo3_2.dto.UserRequest;
 import org.example.doandemo3_2.dto.LoginResponse;
 import org.example.doandemo3_2.dto.RegisterResponse;
@@ -62,21 +63,6 @@ public class UserService {
         return "Tài khoản đã được xác thực!";
     }
 
-    public String uploadAvatar(String userId, MultipartFile avatar) throws IOException {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy người dùng"));
-
-        if (avatar != null && !avatar.isEmpty()) {
-            String avatarFileName = UUID.randomUUID().toString() + "_" + avatar.getOriginalFilename();
-            Path avatarPath = Paths.get(UPLOAD_DIR + avatarFileName);
-            Files.createDirectories(avatarPath.getParent()); // Tạo thư mục nếu chưa có
-            avatar.transferTo(avatarPath); // Lưu ảnh vào thư mục
-            user.setAvatarUrl(avatarPath.toString()); // Lưu đường dẫn ảnh vào cơ sở dữ liệu
-            userRepository.save(user);
-            return "Ảnh đại diện đã được tải lên thành công!";
-        }
-        return "Không có ảnh đại diện để tải lên!";
-    }
 
     public LoginResponse login(UserRequest request) {
         Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
@@ -115,4 +101,10 @@ public class UserService {
             return new LoginResponse("Failed","Xác thực thất bại! Vui lòng thử lại.",null,null);
         }
     }
+
+
+    public void updateUserInfo(User user) {
+        userRepository.save(user);
+    }
+
 }

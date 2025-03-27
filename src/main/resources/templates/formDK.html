@@ -54,6 +54,14 @@
             matKhau: password
         };
 
+        // Hiển thị thông báo đang xử lý
+        Swal.fire({
+            title: 'Đang đăng ký...',
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
         fetch('/api/public/auth/register', {
             method: 'POST',
             headers: {
@@ -63,17 +71,35 @@
         })
             .then(response => response.json())
             .then(data => {
-                alert(data.message);
+                Swal.close(); // Đóng thông báo loading
+
+                Swal.fire({
+                    title: data.errorCode ? 'Lỗi!' : 'Thành công!',
+                    text: data.message,
+                    icon: data.errorCode ? 'error' : 'success',
+                    timer: 3000
+                });
+
                 if (!data.errorCode) {
-                    window.location.href = '/api/public/';
+                    setTimeout(() => {
+                        window.location.href = '/api/public/';
+                    }, 2000);
                 }
             })
             .catch(error => {
-                alert('Đăng ký thất bại: ' + error.message);
+                Swal.close(); // Đóng thông báo loading nếu có lỗi
+
+                Swal.fire({
+                    title: 'Đăng ký thất bại!',
+                    text: error.message,
+                    icon: 'error',
+                    timer: 3000
+                });
             });
     });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script src="/js/logout.js"></script>
 <script src="/js/menu.js"></script>
