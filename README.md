@@ -12,9 +12,11 @@ SQL Injeciton
   - Nhập các đoạn SQL độc vào các trường nhập:
     + Ô đăng nhập.
     + Trường nhập bình luận.
+
 XSS
   - Tấn công vào giao diện frontend.
   - Nhúng mã js độc vào trường bình luận.
+
 Brute Force
   - Tấn công vào hệ thống xác thực của backend.
   - Sử dụng công cụ thử mật khẩu vào hệ thống đăng nhập 
