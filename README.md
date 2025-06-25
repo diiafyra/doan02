@@ -6,6 +6,7 @@ Luồng cơ bản:
   (Quản trị viên sử dụng SharePoint để đăng bài, hệ thống ghi nhận thông tin và lưu vào SQL Server. Nginx đóng vai trò xử lý request và tối ưu phân phối nội dung)
 
 Sử dụng để mô phỏng:
+
 SQL Injeciton
   - Tấn công vào backend và database.
   - Nhập các đoạn SQL độc vào các trường nhập:
